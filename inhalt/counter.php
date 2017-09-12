@@ -11,13 +11,14 @@ else
 	$iphost=$ip;
 	$iphost.=$host;
 
+	$error = 0;
 	$sqlquery1 = "SELECT iphost FROM `".$sqlpraefix."besucher`";
 	$sqlresult1 = mysql_query($sqlquery1);
 	while($row1 = mysql_fetch_object($sqlresult1))
 		{
 		if($row1->iphost==$iphost)
 			{
-			$error=1;
+			$error = 1;
 			}
 		}
 
@@ -32,7 +33,5 @@ else
 	while($row1 = mysql_fetch_object($sqlresult1))
 		{
 		$counterbesuchertext = $row1->lol;
-		}	
+		}
 	}
-	
-?>

@@ -1,6 +1,6 @@
 <?php
 
-include("inhalt/dkp/dkpconfig.php");
+include_once("inhalt/dkp/dkpconfig.php");
 
 echo "\n<table width=\"100%\">";
 echo "\n<tr><td bgcolor=\"$colorbgdunkel\" width=\"70%\" align=\"center\"><font color=\"$colortextdunkel\">";
@@ -26,17 +26,15 @@ echo "\n</font>";
 echo "\n</td>";
 echo "</tr></table><br>";
 
-$fakesite=mysql_real_escape_string($_GET["site"]);
+$fakesite=get("site");
 
 if($fakesite!="")
 	{
-	include("dkp/include.php");
+	include_once("dkp/include.php");
 	}
 else
 	{
-	include("inhalt/dkp/overview.php");
+	include_once("inhalt/dkp/overview.php");
 	}
 
 
-
-?>

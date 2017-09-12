@@ -1,6 +1,6 @@
 <?php
 
-$forumid=mysql_real_escape_string($_GET["forumid"]);
+$forumid = (int) get("forumid");
 
 $sqlquery3 = "SELECT * FROM `".$sqlpraefix."forums` WHERE id = $forumid";
 $sqlresult3 = mysql_query($sqlquery3);
@@ -36,25 +36,25 @@ echo "\n</font></td></table>";
 
 if($seasonid=="")
 	{
-	echo "\n<br>Sie müssen eingeloggt sein um einen Thread zu erstellen.<br>";
+	echo "\n<br>Sie mÃ¼ssen eingeloggt sein um einen Thread zu erstellen.<br>";
 	echo "\n<br><a href=\"index.php?mode=login\">einloggen?</a> <a href=\"index.php?mode=register\">registrieren?</a><br>";
 	}
 
 else
 	{
-	if($forumid=="")
+	if($forumid==0)
 		{
 		echo "<br><a href=\"index.php?mode=forums&amp;season=$seasonid\">Sie m&uuml;ssen ein Forum angeben</a><br>";
 		}
 	else
 		{
-		$faketext=mysql_real_escape_string($_POST['p_text']);
-		$fakecaption=mysql_real_escape_string($_POST['p_caption']);
+		$faketext = post('p_text');
+		$fakecaption = post('p_caption');
 		
 		
 		if($faketext==""||$fakecaption=="")
 			{
-			if(($threadmodus!=2&&$threadmodus!=3)||$headeruserrang==2)
+			if(($forummodus!=2&&$forummodus!=3)||$headeruserrang==2)
 				{
 				echo "<br><form action=\"index.php?mode=newthread&amp;forumid=$forumid&amp;season=$seasonid\" method=\"post\">";
 				echo "Name: <input name=\"p_caption\" size=\"30\" maxlength=\"30\"><br>";
@@ -96,7 +96,7 @@ else
 				}
 			else
 				{
-				if(($threadmodus!=2&&$threadmodus!=3)||$headeruserrang==2)
+				if(($forummodus!=2&&$forummodus!=3)||$headeruserrang==2)
 					{
 					$sqlquery4 = "INSERT INTO `".$sqlpraefix."threads` ( `id` , `forumid` , `userid`, `modus` , `name`)";
 					$sqlquery4 .= "VALUES ('', '$forumid', '$abcduserid', 1, '$caption')";
@@ -121,11 +121,11 @@ $sqlquery5 = "SELECT * FROM `".$sqlpraefix."threads` WHERE `forumid` = '$forumid
 					echo "\n<br><a href=\"index.php?mode=posts&amp;threadid=$threadid&amp;season=$seasonid\">";
 					echo "Zum Thread zur&uuml;ck</a><br>";
 					}
-				}		
+				}
 			}
 		}
 	}
 
 
 mysql_close($sqlconnection);
-?>
+

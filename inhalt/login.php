@@ -22,8 +22,8 @@ echo "<a href=\"index.php?mode=logout&amp;season=",$seasonid,"\">ausloggen?</a><
 
 else
 {
-$user=mysql_real_escape_string($_POST["p_user"]);
-$pass=mysql_real_escape_string($_POST["p_passwd"]);
+$user = post("p_user");
+$pass = post("p_passwd");
 
 if($user == "" || $pass == "")
 {
@@ -35,4 +35,4 @@ echo "<input type=\"submit\" value=\"Ok\"></form>";
 
 }
 mysql_close($sqlconnection);
-?>
+

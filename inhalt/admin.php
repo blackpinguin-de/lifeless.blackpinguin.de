@@ -32,43 +32,43 @@ if($headeruserrang!=2)
 	}
 else
 	{
-	$id=mysql_real_escape_string($_GET["id"]);
-	$order=mysql_real_escape_string($_GET["order"]);
-	if($id!="" && $order !="")
+	$id = (int) get("id");
+	$order = get("order");
+	if($id != 0 && $order != "")
 		{
 		//Adminbefehle hier rein
 
 		echo "<font color=\"#FFFFFF\">Befehl: <b>";
 		if($order==0) //threadclose need: threadid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '2' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '2' WHERE `id` = $id";
 			echo "Thread CLOSE";
 			}
 	
 		if($order==1) //threaddelete need:threadid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '3' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '3' WHERE `id` = $id";
 			echo "Thread DELETE";
 			}
 	
 	
 		if($order==2) //forumclose need: forumid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '2' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '2' WHERE `id` = $id";
 			echo "Forum CLOSE";
 			}
 	
 	
 		if($order==3) //forumdelete need: forumid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '3' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '3' WHERE `id` = $id";
 			echo "Forum DELETE";
 			}
 	
 	
 		if($order==4) //postdelete need postid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."posts` SET `deleted` = '1' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."posts` SET `deleted` = '1' WHERE `id` = $id";
 			echo "Post DELETE";
 			}
 
@@ -77,39 +77,39 @@ else
 
 		if($order==5) //threadnormal need: threadid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '1' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."threads` SET `modus` = '1' WHERE `id` = $id";
 			echo "Thread NORMAL";
 			}
 	
 	
 		if($order==6) //forumnormal need: forumid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '1' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."forums` SET `modus` = '1' WHERE `id` = $id";
 			echo "Forum NORMAL";
 			}
 
 	
 		if($order==7) //postnormal need postid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."posts` SET `deleted` = '0' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."posts` SET `deleted` = '0' WHERE `id` = $id";
 			echo "Post NORMAL";
 			}
 
 		if($order==8) //usersperren need userid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '0' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '0' WHERE `id` = $id";
 			echo "User BAN";
 			}
 
 		if($order==9) //usernormal need userid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '1' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '1' WHERE `id` = $id";
 			echo "User NORMAL";
 			}
 
 		if($order==10) //usernormal need userid
 			{
-			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '2' WHERE `id` =$id";
+			$sqlabfrage = "UPDATE `".$sqlpraefix."users` SET `rang` = '2' WHERE `id` = $id";
 			echo "User ADMIN";
 			}
 		echo " id = $id</b><br>";
@@ -129,4 +129,4 @@ else
 			}
 		}
 	}
-?>
+

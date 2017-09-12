@@ -1,7 +1,7 @@
 <?php
 
-$forumid=mysql_real_escape_string($_GET["forumid"]);
-if($forumid=="")
+$forumid = (int) get("forumid");
+if($forumid === 0)
 	{
 	echo "\n<table width=\"100%\">";
 	echo "\n<tr><td bgcolor=\"$colorbgdunkel\" width=\"70%\"><font color=\"$colortextdunkel\">";
@@ -234,6 +234,6 @@ else
 			}
 		}
 	}
-	
+
 mysql_close($sqlconnection);
-?>
+

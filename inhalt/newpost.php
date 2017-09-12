@@ -1,5 +1,5 @@
 <?php
-$threadid=mysql_real_escape_string($_GET["threadid"]);
+$threadid = (int) get("threadid");
 
 $sqlquery2 = "SELECT * FROM `".$sqlpraefix."threads` WHERE id = $threadid";
 $sqlresult2 = mysql_query($sqlquery2);
@@ -38,19 +38,19 @@ echo "\n</font></td></table>";
 
 if($seasonid=="")
 	{
-	echo "\n<br>Sie müssen eingeloggt sein um zu posten<br>";
+	echo "\n<br>Sie mÃ¼ssen eingeloggt sein um zu posten<br>";
 	echo "\n<br><a href=\"index.php?mode=login\">einloggen?</a> <a href=\"index.php?mode=register\">registrieren?</a><br>";
 	}
 
 else
 	{
-	if($threadid=="")
+	if($threadid==0)
 		{
 		echo "<br><a href=\"index.php?mode=forums&amp;season=$seasonid\">Sie m&uuml;ssen einen Thread angeben</a><br>";
 		}
 	else
 		{
-		$faketext=mysql_real_escape_string($_POST['p_text']);
+		$faketext = post('p_text');
 		if($faketext=="")
 			{
 			if(($threadmodus!=2&&$threadmodus!=3)||$headeruserrang==2)
@@ -109,10 +109,10 @@ else
 					echo "\n<br><a href=\"index.php?mode=posts&amp;threadid=$threadid&amp;season=$seasonid\">";
 					echo "Zum Thread zur&uuml;ck</a><br>";
 					}
-				}		
+				}
 			}
 		}
 	}
 
 
-?>
+

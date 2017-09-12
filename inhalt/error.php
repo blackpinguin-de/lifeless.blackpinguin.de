@@ -32,11 +32,11 @@ if($loginerror!=0)
 		echo "\n<br>Sie konnten nicht eingeloggt werden.<br>Dies hat folgenden Grund:<br><br>";
 		echo "\nDer angegebene Benutzer konnte nicht gefunden werden.<br>Achten sie auf die korrekte schreibweise und probieren sie es erneut.";
 		echo "\n<br><br><a href=\"index.php?mode=login\">einloggen?</a> <a href=\"index.php?mode=register\">registrieren?</a><br>";
-		}	
+		}
 	}
 
 
 
 
 mysql_close($sqlconnection);
-?>
+

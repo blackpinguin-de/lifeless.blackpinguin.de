@@ -45,5 +45,3 @@ echo "<img src=\"http://status.icq.com/online.gif?icq=$nummer&amp;img=5\" alt=\"
 
 
 echo "</table>";
-
-?>

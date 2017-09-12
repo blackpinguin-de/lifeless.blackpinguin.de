@@ -1,6 +1,7 @@
 <?php
-include("inhalt/config.php");
+include_once("inhalt/config.php");
 
+$postcount = 0;
 
 $abb = "SELECT * FROM `".$sqlpraefix."threads` WHERE `forumid` = $newsforumid AND `modus` != 3"; 
 $erb = mysql_query($abb);
@@ -9,13 +10,13 @@ while($row = mysql_fetch_object($erb))
 	$postcount++;
 	}
 $maxpages = ceil($postcount/$newscount);
-if(mysql_real_escape_string($_GET["page"])=="")
+if(get("page")=="")
 	{
 	$page = 1;
 	}
 else
 	{
-	$page = mysql_real_escape_string($_GET["page"]);
+	$page = (int) get("page");
 	}
 $pageb=$page;
 
@@ -98,16 +99,16 @@ if($maxpages!=1)
 			}
 	else
 			{
-			echo "<a href=\"index.php?mode=news&amp;threadid=$threadid&amp;page=$i";
+			echo "<a href=\"index.php?mode=news&amp;page=$i";
 			if($seasonid!="")
 				{
 				echo "&amp;season=$seasonid";
 				}
 			echo "\">$i</a> ";
-			}			
+			}
 		}
 	echo "</font></div></td></tr></table><br>";
 	}
-	
+
 mysql_close($sqlconnection);
-?>
+

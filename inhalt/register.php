@@ -25,11 +25,11 @@ if($seasonid!="")
 
 else
 	{
-	$fakename = mysql_real_escape_string($_POST['p_name']);
-	$fakepwd = mysql_real_escape_string($_POST['p_pwd']);
-	$fakepwdc = mysql_real_escape_string($_POST['p_pwdc']);
-	$fakeemail = mysql_real_escape_string($_POST['p_email']);
-	$fakeemailc = mysql_real_escape_string($_POST['p_emailc']);	
+	$fakename = post('p_name');
+	$fakepwd = post('p_pwd');
+	$fakepwdc = post('p_pwdc');
+	$fakeemail = post('p_email');
+	$fakeemailc = post('p_emailc');
 	
 	
 	
@@ -58,12 +58,12 @@ else
 		{
 		if(($fakepwd==$fakepwdc) && ($fakeemail==$fakeemailc))
 			{
-			$fakesig = mysql_real_escape_string($_POST['p_sig']);
-			$fakeava = mysql_real_escape_string($_POST['p_ava']);
-			$fakegeby = mysql_real_escape_string($_POST['p_geb_y']);
-			$fakegebm = mysql_real_escape_string($_POST['p_geb_m']);
-			$fakegebd = mysql_real_escape_string($_POST['p_geb_d']);
-			$fakeemailv = mysql_real_escape_string($_POST['p_emailv']);
+			$fakesig = post('p_sig');
+			$fakeava = post('p_ava');
+			$fakegeby = post('p_geb_y');
+			$fakegebm = post('p_geb_m');
+			$fakegebd = post('p_geb_d');
+			$fakeemailv = post('p_emailv');
 			
 			
 			$name=htmlentities($fakename);
@@ -111,4 +111,4 @@ else
 		}
 	}
 mysql_close($sqlconnection);
-?>
+

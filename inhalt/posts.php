@@ -1,7 +1,7 @@
 <?php
 
-$threadid=mysql_real_escape_string($_GET["threadid"]);
-if($threadid=="")
+$threadid = (int) get("threadid");
+if($threadid==0)
 	{
 
 	echo "\n<table width=\"100%\">";
@@ -72,7 +72,7 @@ else
 		}
 	echo "\n</font></td>";
 
-	$abb = "SELECT `id` FROM `".$sqlpraefix."posts` WHERE `threadid` = '$threadid'"; 
+	$abb = "SELECT `id` FROM `".$sqlpraefix."posts` WHERE `threadid` = '$threadid'";
 	$erb = mysql_query($abb);
 	$postcount = 0;
 		while($row = mysql_fetch_object($erb))
@@ -81,9 +81,9 @@ else
 		}
 	$maxpages = ceil($postcount/$pageacount);
 	
-	$fakepage=mysql_real_escape_string($_GET["page"]);
+	$fakepage = (int) get("page");
 	
-	if($fakepage=="")
+	if($fakepage == 0)
 		{
 		$page = 1;
 		}
@@ -109,7 +109,7 @@ else
 					echo "&amp;season=$seasonid";
 					}
 				echo "\">$i</a> ";
-				}			
+				}
 			}
 		echo "</font></div></td>";
 		}
@@ -241,13 +241,17 @@ else
 					echo "</font></td></tr></table>";
 					}
 				echo "\n<table width=\"80%\" cellspacing=\"0\">";
+				$tempusername = "";
+				$avatar = "";
+				$signatur = "";
+				$rang = 0;
 				$sqlquery2 = "SELECT * FROM `".$sqlpraefix."users` WHERE `id` = $tempuserid";
 				$sqlresult2 = mysql_query($sqlquery2);
 				while($rowb = mysql_fetch_object($sqlresult2))
 					{
 					$tempusername = $rowb->name;
-					$avatar=$rowb->avatar;
-					$signatur=bbcodepost(str_replace("\n", "<br>", $rowb->signatur));
+					$avatar = $rowb->avatar;
+					$signatur = bbcodepost(str_replace("\n", "<br>", $rowb->signatur));
 					$rang = $rowb->rang;
 					}
 				echo "<tr><td bgcolor=\"$colorbgdunkel\" width=\"20%\" align=\"center\" valign=\"top\">";
@@ -377,7 +381,7 @@ else
 		}
 	echo "\n</font></td>";
 
-	$abb = "SELECT `id` FROM `".$sqlpraefix."posts` WHERE `threadid` = '$threadid'"; 
+	$abb = "SELECT `id` FROM `".$sqlpraefix."posts` WHERE `threadid` = '$threadid'";
 	$erb = mysql_query($abb);
 	$postcount = 0;
 		while($row = mysql_fetch_object($erb))
@@ -385,7 +389,7 @@ else
 		$postcount++;
 		}
 	$maxpages = ceil($postcount/$pageacount);
-	if($fakepage=="")
+	if($fakepage==0)
 		{
 		$page = 1;
 		}
@@ -411,7 +415,7 @@ else
 					echo "&amp;season=$seasonid";
 					}
 				echo "\">$i</a> ";
-				}			
+				}
 			}
 		echo "</font></div></td>";
 		}
@@ -498,4 +502,4 @@ else
 
 mysql_close($sqlconnection);
 
-?>
+

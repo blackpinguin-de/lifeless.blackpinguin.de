@@ -33,24 +33,24 @@ while($rowb = mysql_fetch_object($sqlergebnis1))
 
 if($suserrang==2) //ist er ein Admin?
 	{
-	$fakeuserid=mysql_real_escape_string($_GET['userid']);
-	$fakename=mysql_real_escape_string($_POST['p_name']);
-	$fakeemail=mysql_real_escape_string($_POST['p_email']);
-	$fakesig=mysql_real_escape_string($_POST['p_sig']);
-	$fakeava=mysql_real_escape_string($uava=$_POST['p_ava']);
-	$fakegebd=mysql_real_escape_string($_POST['p_geb_d']);
-	$fakegebm=mysql_real_escape_string($_POST['p_geb_m']);
-	$fakegeby=mysql_real_escape_string($_POST['p_geb_y']);
-	$fakeadminedit=mysql_real_escape_string($_GET['adminedit']);
-	$fakeoldpwd=mysql_real_escape_string($_POST['p_oldpwd']);
-	$fakepwd=mysql_real_escape_string($_POST['p_pwd']);
-	$fakepwdc=mysql_real_escape_string($_POST['p_pwdc']);
-	$fakeemailv=mysql_real_escape_string($_POST['p_emailv']);
+	$fakeuserid = (int) get('userid');
+	$fakename = post('p_name');
+	$fakeemail = post('p_email');
+	$fakesig = post('p_sig');
+	$fakeava = $uava = post('p_ava');
+	$fakegebd = post('p_geb_d');
+	$fakegebm = post('p_geb_m');
+	$fakegeby = post('p_geb_y');
+	$fakeadminedit = (int) get('adminedit');
+	$fakeoldpwd = post('p_oldpwd');
+	$fakepwd = post('p_pwd');
+	$fakepwdc = post('p_pwdc');
+	$fakeemailv = post('p_emailv');
 	
 	
 	
 	
-	if($fakeuserid==$suserid||$fakeuserid=="") //will er sich selbst bearbeiten?
+	if($fakeuserid==$suserid||$fakeuserid==0) //will er sich selbst bearbeiten?
 		{
 		echo "\n<table width=\"100%\">";
 		echo "\n<tr><td bgcolor=\"$colorbgdunkel\" width=\"100%\"><font color=\"$colortextdunkel\">";
@@ -135,7 +135,7 @@ if($suserrang==2) //ist er ein Admin?
 			if($emailv==1)
 				{
 				echo " checked=\"checked\"";
-				}	
+				}
 			echo "> zeigen?<br><br>";
 			echo "\nSignatur:<br><input name=\"p_sig\" type=\"text\"  size=\"40\" maxlength=\"200\" value=\"$susersig\"><br>";
 			echo "\nAvatar:<br><input name=\"p_ava\" type=\"text\"  size=\"40\" maxlength=\"100\" value=\"$suserava\"><br><br>";
@@ -318,4 +318,4 @@ else //wenn er ein normaler user ist:
 		}
 	}
 mysql_close($sqlconnection);
-?>	
+

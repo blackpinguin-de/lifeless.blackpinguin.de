@@ -2,7 +2,7 @@
 /*
 0 Druide
 1 Hexenmeister
-2 Jäger
+2 JÃ¤ger
 3 Krieger
 4 Magier
 5 Paladin
@@ -29,13 +29,13 @@ echo "\n</td></tr></table><br>";
 
 
 
-$fakename = mysql_real_escape_string($_POST['p_name']);
-$fakeemail = mysql_real_escape_string($_POST['p_email']);
-$fakegebd = mysql_real_escape_string($_POST['p_geb_d']);
-$fakegebm = mysql_real_escape_string($_POST['p_geb_m']);
-$fakegeby = mysql_real_escape_string($_POST['p_geb_y']);
-$fakeraidexp = mysql_real_escape_string($_POST['p_raidexpierience']);
-$fakekritik = mysql_real_escape_string($_POST['p_kritik']);
+$fakename = post('p_name');
+$fakeemail = post('p_email');
+$fakegebd = post('p_geb_d');
+$fakegebm = post('p_geb_m');
+$fakegeby = post('p_geb_y');
+$fakeraidexp = post('p_raidexpierience');
+$fakekritik = post('p_kritik');
 
 
 
@@ -68,10 +68,10 @@ if($fakename == "" || $fakeemail == "" || $fakegebd == "" || $fakegebm == "" || 
 	}
 else
 	{
-	if((mysql_real_escape_string($_POST['p_raidexpierience'])!="kleiner Text in dem ihr erkl&auml;rt in was für Raidinstanzen ihr bisher wart, mit welcher Raidgruppe und wie erfolgreich.") && (mysql_real_escape_string($_POST['p_kritik'])!="kleiner Text in dem ihr euch selbst _einsch&auml;tzt_: wie ihr Ausger&uuml;stet (keine Auflistung der Items) und wie gut ihr seid."))
+	if((post('p_raidexpierience')!="kleiner Text in dem ihr erkl&auml;rt in was fÃ¼r Raidinstanzen ihr bisher wart, mit welcher Raidgruppe und wie erfolgreich.") && (post('p_kritik')!="kleiner Text in dem ihr euch selbst _einsch&auml;tzt_: wie ihr Ausger&uuml;stet (keine Auflistung der Items) und wie gut ihr seid."))
 		{
-		$name=htmlentities($fakename);
-		$klassezahl=htmlentities(mysql_real_escape_string($_POST['p_klasse']));
+		$name = htmlentities($fakename);
+		$klassezahl = (int) htmlentities(post('p_klasse'));
 		if($klassezahl==0){$klasse="Druide";}
 		if($klassezahl==1){$klasse="Hexenmeister";}
 		if($klassezahl==2){$klasse="J&auml;ger";}
@@ -81,7 +81,7 @@ else
 		if($klassezahl==6){$klasse="Priester";}
 		if($klassezahl==7){$klasse="Schamane";}
 		if($klassezahl==0){$klasse="Schurke";}
-		$gilde=htmlentities(mysql_real_escape_string($_POST['p_gilde']));
+		$gilde=htmlentities(post('p_gilde'));
 		$email=htmlentities($fakeemail);
 		$d=htmlentities($fakegebd);
 		$m=htmlentities($fakegebm);
@@ -127,6 +127,6 @@ else
 		echo "\n<br><a href=\"index.php?mode=bewerbung\">Zur&uuml;ck</a><br>";
 		}
 	}
-		
-		
-?>
+
+
+

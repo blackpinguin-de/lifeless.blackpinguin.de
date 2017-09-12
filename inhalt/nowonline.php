@@ -3,6 +3,7 @@
 echo "<table width=\"100%\" cellspacing=\"0\" align=\"center\">";
 echo "<tr><td align=\"right\" bgcolor=\"$colorbgdunkel\">Online:</td><td align=\"left\" bgcolor=\"$colorbgdunkel\">";
 
+$userid = 0;
 $sqlquery = "SELECT `s`.`userid` as useridr, `s`.`expire` as expirer, `u`.`name` as namer, `u`.`rang` as rangr FROM `".$sqlpraefix."season` `s`, `".$sqlpraefix."users` `u`  WHERE `s`.`userid` = `u`.`id` ORDER BY `u`.`rang` DESC";
 $sqlresult = mysql_query($sqlquery);
 while($row = mysql_fetch_object($sqlresult))
@@ -32,4 +33,4 @@ if($userid==0)
 	{echo "<font color=\"$colortextdunkel\">keiner</font>";}
 
 echo "</td></tr></table>";
-?>
+

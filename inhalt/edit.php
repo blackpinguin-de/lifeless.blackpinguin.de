@@ -11,13 +11,13 @@
 
 if($headeruserrang==2)
 	{
-	$id=mysql_real_escape_string($_GET["id"]);
-	$order=mysql_real_escape_string($_GET["order"]);
-	$fakeadminedit=mysql_real_escape_string($_GET['adminedit']);
+	$id = (int) get("id");
+	$order = (int) get("order");
+	$fakeadminedit = (int) get("adminedit");
 	
-	if($order==1) // Name vom Forum ändern
+	if($order==1) // Name vom Forum Ã¤ndern
 		{
-		if($fakeadminedit==1) // Ausführen
+		if($fakeadminedit==1) // AusfÃ¼hren
 			{
 			$sqlabfrage1 = "SELECT `name` FROM `".$sqlpraefix."forums` WHERE `id` = '$id'";
 			$sqlergebnis1 = mysql_query($sqlabfrage1);
@@ -41,7 +41,7 @@ if($headeruserrang==2)
 			echo "\n</font>";
 			echo "\n</td></tr></table><br>";
 			
-			$newforumname=mysql_real_escape_string($_POST['p_name']);
+			$newforumname = post("p_name");
 			if($newforumname != "")
 				{
 				$sqlabfrage1 = "UPDATE `".$sqlpraefix."forums` SET `name` = '$newforumname' WHERE `id` ='$id'";
@@ -81,9 +81,9 @@ if($headeruserrang==2)
 			}
 		}
 
-	if($order==2) // Name vom Thread ändern 
+	if($order==2) // Name vom Thread Ã¤ndern
 		{
-		if($fakeadminedit==1) // Ausführen
+		if($fakeadminedit==1) // AusfÃ¼hren
 			{
 			$sqlabfrage1 = "SELECT `name`,`forumid` FROM `".$sqlpraefix."threads` WHERE `id` = '$id'";
 			$sqlergebnis1 = mysql_query($sqlabfrage1);
@@ -119,7 +119,7 @@ if($headeruserrang==2)
 			echo "\n</td></tr></table><br>";
 
 
-			$newthreadname=mysql_real_escape_string($_POST['p_name']);
+			$newthreadname = post("p_name");
 			if($newthreadname != "")
 				{
 				$sqlabfrage1 = "UPDATE `".$sqlpraefix."threads` SET `name` = '$newthreadname' WHERE `id` ='$id'";
@@ -180,7 +180,7 @@ if($headeruserrang==2)
 
 	if($order==3) // Post editieren
 		{
-		if($fakeadminedit==1) // Ausführen
+		if($fakeadminedit==1) // AusfÃ¼hren
 			{
 			$sqlabfrage1 = "SELECT `threadid` FROM `".$sqlpraefix."posts` WHERE `id` = '$id'";
 			$sqlergebnis1 = mysql_query($sqlabfrage1);
@@ -221,9 +221,9 @@ if($headeruserrang==2)
 			echo "Post &auml;ndern";
 			echo "\n</font>";
 			echo "\n</td></tr></table><br>";
-				$thistime=time();
-				$newposttext=htmlentities(mysql_real_escape_string($_POST['p_text']));;
-				$editdatum =date("Y-m-d H:i:s",$thistime);
+				$thistime = time();
+				$newposttext = htmlentities(post("p_text"));;
+				$editdatum = date("Y-m-d H:i:s",$thistime);
 				$sqlabfrage1 = "UPDATE `".$sqlpraefix."posts` SET `text` = '$newposttext', `edituserid` = '$headeruserid', `editdatum` = '$editdatum' WHERE `id` ='$id'";
 
 			mysql_query($sqlabfrage1);
@@ -314,4 +314,4 @@ else
 		}
 	}
 mysql_close($sqlconnection);
-?>
+

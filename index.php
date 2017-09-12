@@ -1,26 +1,28 @@
 <?php
-include("inhalt/config.php");
-include("../funktionen.php");
+include_once("/rcl/www/funktionen.php");
+include_once("inhalt/config.php");
 
 function bbcodepost($string)
     {
+	global $colortextlinkhell;
 	$string =  str_replace("[img]", "<img alt=\"\" height=\"190\" width=\"250\" border=\"0\" src=\"", $string);
 	$string =  str_replace("[/img]", "\">", $string);
 	$string =  str_replace("[link]", "<a href=\"", $string);
 	$string =  str_replace("[/link]", "\"><font color=\"$colortextlinkhell\">link</font></a>", $string);
 	return $string;
-	}	
+    }
 
 function bbcodenews($string)
     {
+	global $colortextlinkhell;
 	$string =  str_replace("[img]", "<img alt=\"\" height=\"340\" width=\"450\" border=\"0\" src=\"", $string);
 	$string =  str_replace("[/img]", "\">", $string);
 	$string =  str_replace("[link]", "<a href=\"", $string);
 	$string =  str_replace("[/link]", "\"><font color=\"$colortextlinkhell\">link</font></a>", $string);
 	return $string;
-	}	
+	}
 
-/*	
+/*
 function bbcodenews($string)
 {
 $string = eregi_replace("\[b\]([^\[]+)\[/b\]","<b>\\1</b>",$string);
@@ -28,27 +30,30 @@ $string = eregi_replace("\[i\]([^\[]+)\[/i\]","<i>\\1</i>",$string);
 $string = eregi_replace("\[u\]([^\[]+)\[/u\]","<u>\\1</u>",$string);
 $string = eregi_replace("\[img\]([^\[]+)\[/img\]","<img src=\"\\1\" border=\"0\">",$string);
 $string= eregi_replace("\[url\]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\">\\1</a>",$string);
-$string= eregi_replace("\[url=\"([^\"]+)\"]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\">\\2</a>",$string);	
+$string= eregi_replace("\[url=\"([^\"]+)\"]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\">\\2</a>",$string);
 }
 */
 
-	
-	
-$counterausgabe=0;	
-include("inhalt/counter.php");	
-	
-	
-$fakedseason=mysql_real_escape_string($_GET["season"]);
-	
+
+
+$counterausgabe=0;
+include("inhalt/counter.php");
+
+
+$seasonid = "";
+$loginerror = 0;
+$abcdeferror = 0;
+$fakedseason = get("season");
+
 if($fakedseason != "")
 	{
 	$thistime=time();
-	$seasonid=$fakedseason;
+	$seasonid = $fakedseason;
 	$sqlquery = "SELECT * FROM `".$sqlpraefix."season`";
 	$sqlresult = mysql_query($sqlquery);
 	while($row = mysql_fetch_object($sqlresult))
 		{
-		if($seasonid==$row->key)
+		if($seasonid == $row->key)
 			{
 			$sqltime=$row->expire;
 			$sqlseasonuserid=$row->userid;
@@ -58,8 +63,8 @@ if($fakedseason != "")
 		{
 		$sqlquery = "DELETE FROM `".$sqlpraefix."season` WHERE `key` = '$seasonid' LIMIT 1";
 		mysql_query($sqlquery);
-		$seasonid="";
-		$loginerror=1; //season abgelaufen
+		$seasonid = "";
+		$loginerror = 1; //season abgelaufen
 		}
 	else
 		{
@@ -72,32 +77,33 @@ if($fakedseason != "")
 
 if($fakedseason == "")
 	{
-	$fakeuser=mysql_real_escape_string($_POST["p_user"]);
-	$fakepass=mysql_real_escape_string($_POST["p_passwd"]);
-	if($fakeuser != "" || $fakepass != "")
+	$fakeuser = post("p_user");
+	$fakepass = post("p_passwd");
+	if ($fakeuser != "" || $fakepass != "")
 		{
 		$user = $fakeuser;
 		$passwd = md5(str_rot13(md5(crc32(md5(str_rot13(md5(crc32(md5(strtoup($fakepass))))))))));
+
 		$sqlquery = "SELECT * FROM `".$sqlpraefix."users`";
 		$sqlresult = mysql_query($sqlquery);
 		while($row = mysql_fetch_object($sqlresult))
 			{
 			if(strtoup($row->name) == strtoup($user))
 				{
-				$resultid=$row->id;
-				$sqlseasonuserid=$resultid;
-				$resultpasswd=$row->passwd;
-				$resultrang=$row->rang;
+				$resultid = $row->id;
+				$sqlseasonuserid = $resultid;
+				$resultpasswd = $row->passwd;
+				$resultrang = $row->rang;
 				}
 			}
-		if($resultid!=0)
+		if($resultid != 0)
 			{
-			if($passwd==$resultpasswd && $resultrang != 0)
+			if($passwd == $resultpasswd && $resultrang != 0)
 				{
 				$sqlquery = "DELETE FROM `".$sqlpraefix."season` WHERE userid='$resultid'";
 				mysql_query($sqlquery);
 
-				$seasonid=md5(rand(1,50000000));
+				$seasonid = md5(rand(1, 50000000));
 				$sqlquery = "SELECT * FROM `".$sqlpraefix."season`";
 				$sqlresult = mysql_query($sqlquery);
 				$fehler=1;
@@ -105,50 +111,56 @@ if($fakedseason == "")
 					{
 					while($row = mysql_fetch_object($sqlresult))
 						{
-						if($seasonid==$row->seasonid)
+						if($seasonid == $row->key)
 							{
-							$seasonid=md5(rand(1,50000000));break;
+							$seasonid = md5(rand(1,50000000));break;
 							}
 						}
-					$fehler=0;
+					$fehler = 0;
 					}
 				$thistime=time();
 				$datum=date("Y-m-d H:i:s",($thistime+900));
 				$sqlquery = "INSERT INTO `".$sqlpraefix."season` ( `id` , `userid` , `key` , `expire` )"; 
 				$sqlquery .= "VALUES ('', '$resultid', '$seasonid', '$datum')";
 				mysql_query($sqlquery);
-				}	
+				}
 			else
 				{
-				$seasonid="";
-				$loginerror=2; //passwort falsch abgelaufen
-				}	
+				$seasonid = "";
+				$loginerror = 2; //passwort falsch abgelaufen
+				}
 			}
 		else
 			{
-			$seasonid="";
-			$loginerror=3; //user nicht gefunden
+			$seasonid = "";
+			$loginerror = 3; //user nicht gefunden
 			}
+		}
+	else if (isset($_GET["p_user"]) || isset($_GET["p_passwd"]))
+		{
+		$seasonid = "";
+		$loginerror = 3;
 		}
 	}
 
 
-
-if($seasonid != "")
+$headeruserid = 0;
+$headeruserrang = 0;
+if ($seasonid != "")
 	{
-	$thistime=time();
-	$datum=date("Y-m-d H:i:s",($thistime+900));
+	$thistime = time();
+	$datum = date("Y-m-d H:i:s",($thistime+900));
 	$sqlquery = "UPDATE `".$sqlpraefix."season` SET `expire` = '$datum' WHERE `key` = '$seasonid'";
 	mysql_query($sqlquery);
 
-	$headeruserid=$sqlseasonuserid;
+	$headeruserid = $sqlseasonuserid;
 	
 	$sqlquery = "SELECT * FROM `".$sqlpraefix."users` WHERE id=$headeruserid";
 	$sqlresult = mysql_query($sqlquery);
 	while($row = mysql_fetch_object($sqlresult))
 		{
-		$headerusername=$row->name;
-		$headeruserrang=$row->rang;
+		$headerusername = $row->name;
+		$headeruserrang = (int) $row->rang;
 		}
 	// $headeruserid
 	// $headerusername
@@ -177,9 +189,9 @@ echo "<body text=\"#ffffff\" link=\"$colortextlinkdunkel\" alink=\"$colortextlin
 <tr><td height="299" style="background-image:url(img/style/navi_middle.gif);" align="center">
 
 <?php
-$fakemode=mysql_real_escape_string($_GET["mode"]);
+$fakemode = get("mode");
 
-if($seasonid=="" || $fakemode=="logout")
+if($seasonid == "" || $fakemode == "logout")
 {
 echo "\n<a href=\"index.php\">News</a><br>";
 echo "\n<a href=\"index.php?mode=forums\">Forum</a><br>";
@@ -192,7 +204,7 @@ echo "\n<a href=\"index.php?mode=bewerbung\">Bewerben</a><br>";
 echo "\n<a href=\"index.php?mode=imp\">Impressum</a>";
 }
 
-if($seasonid!="" && $fakemode!="logout")
+if($seasonid != "" && $fakemode != "logout")
 {
 echo "\n<a href=\"index.php?season=$seasonid\">News</a><br>";
 echo "\n<a href=\"index.php?mode=forums&amp;season=$seasonid\">Forum</a><br>";
@@ -230,10 +242,11 @@ echo "\n<a href=\"index.php?mode=imp&amp;season=$seasonid\">Impressum</a>";
 <td width="70" style="background-image:url(img/style/content_left.gif);"></td>
 <td width="500" align="center" valign="top">
 <?php
-if($loginerror==1||$loginerror==2||$loginerror==3)
+
+if($loginerror == 1 || $loginerror == 2 || $loginerror == 3)
 	{
 	$go ="inhalt/error.php";
-	include($go);
+	include_once($go);
 	}
 else
 	{
@@ -244,15 +257,15 @@ else
 		$go .=".php";
 		if($fakemode=="dkp")
 			{
-			$fakesite=mysql_real_escape_string($_GET["site"]);
+			$fakesite=get("site");
 			if($fakesite!="")
 				{
 				$go2  ="inhalt/dkp/";
 				$go2 .=$fakesite;
 				$go2 .=".php";
-				if (!file_exists($go2)) 
+				if (!file_exists($go2))
 					{
-					include("inhalt/404.php");
+					include_once("inhalt/404.php");
 					mysql_close($sqlconnection);
 					$abcdeferror=1;
 					}
@@ -262,7 +275,7 @@ else
 			{
 			if(!file_exists($go)) 
 				{
-				include("inhalt/404.php");
+				include_once("inhalt/404.php");
 				mysql_close($sqlconnection);
 				$abcdeferror=1;
 				}
@@ -272,11 +285,11 @@ else
 		{
 		if($fakemode!="")
 			{
-			include("include.php");
+			include_once("include.php");
 			}
 		else
 			{
-			include("inhalt/news.php");
+			include_once("inhalt/news.php");
 			}
 		if($fakemode!="posts")
 			{
@@ -297,8 +310,8 @@ else
 </tr>
 <tr><td align="right" colspan="3">
 <?php
-$counterausgabe=1;	
-include("inhalt/counter.php");	
+$counterausgabe=1;
+include("inhalt/counter.php");
 ?> Besucher
 </td></tr>
 </table>

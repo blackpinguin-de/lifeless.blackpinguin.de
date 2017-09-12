@@ -86,23 +86,8 @@ while($rowa = mysql_fetch_object($sqlergebnis))
 	}
 echo "</table><br>\n";
 
-include("inhalt/nowonline.php");
+include_once("inhalt/nowonline.php");
 
 
 mysql_close($sqlconnection);
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

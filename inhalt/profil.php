@@ -1,8 +1,8 @@
 
 <?php
-$fakeuserid=mysql_real_escape_string($_GET['userid']);
+$fakeuserid = (int) get('userid');
 
-	if($fakeuserid == "")
+	if($fakeuserid === 0)
 		{
 		$profiluserid=$sqlseasonuserid;
 		}
@@ -13,7 +13,7 @@ $fakeuserid=mysql_real_escape_string($_GET['userid']);
 	$sqlquery0 = "SELECT id,name,rang,email,semail,signatur,avatar,register,birthday,(YEAR(CURRENT_DATE)-YEAR(birthday))-(RIGHT(CURRENT_DATE,5)<RIGHT(birthday,5)) AS age FROM `".$sqlpraefix."users` WHERE `id` = $profiluserid";
 	
 	
-	  
+	
 	$sqlresult0 = mysql_query($sqlquery0);
 	while($rowa = mysql_fetch_object($sqlresult0))
 		{
@@ -88,7 +88,7 @@ echo "</tr></table><br>";
 
 if($seasonid=="")
 	{
-	echo "\nSie m�ssen eingeloggt sein um zu die Profile der mitglieder zu betrachten<br>";
+	echo "\nSie müssen eingeloggt sein, um die Profile der Mitglieder betrachten zu dürfen.<br>";
 	echo "\n<br><a href=\"index.php?mode=login\">einloggen?</a> <a href=\"index.php?mode=register\">registrieren?</a><br>";
 	}
 else
@@ -122,14 +122,9 @@ else
 		echo "<tr><td></td><td bgcolor=\"$colorbghell\" colspan=\"2\" align=\"center\"><font color=\"$colortexthell\">$profilusersignatur</font></td></tr>";
 		}
 	echo "</table>";
-	
-
-
 
 }
 
 
 
 mysql_close($sqlconnection);
-?>
-

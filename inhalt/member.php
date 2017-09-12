@@ -28,9 +28,9 @@ if($seasonid!=""){echo "&amp;season=$seasonid";}echo "\">Im Forum seit</a></font
 echo "</tr></table>\n";
 
 $sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY id ASC";
-if(mysql_real_escape_string($_GET['order'])=="name"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY name ASC";}
-if(mysql_real_escape_string($_GET['order'])=="rang"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY rang DESC";}
-if(mysql_real_escape_string($_GET['order'])=="reg"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY register ASC";}
+if(get('order')=="name"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY name ASC";}
+if(get('order')=="rang"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY rang DESC";}
+if(get('order')=="reg"){$sqlabfrage0 = "SELECT * FROM `".$sqlpraefix."users` ORDER BY register ASC";}
 $sqlergebnis0 = mysql_query($sqlabfrage0);
 
 echo "\n<table width=\"90%\">";
@@ -63,22 +63,7 @@ while($rowa = mysql_fetch_object($sqlergebnis0))
 
 	}
 echo "</table>\n<br>";
-include("inhalt/nowonline.php");
+include_once("inhalt/nowonline.php");
 
 mysql_close($sqlconnection);
-?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
