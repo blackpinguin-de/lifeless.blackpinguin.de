@@ -29,8 +29,8 @@ $string = eregi_replace("\[b\]([^\[]+)\[/b\]","<b>\\1</b>",$string);
 $string = eregi_replace("\[i\]([^\[]+)\[/i\]","<i>\\1</i>",$string);
 $string = eregi_replace("\[u\]([^\[]+)\[/u\]","<u>\\1</u>",$string);
 $string = eregi_replace("\[img\]([^\[]+)\[/img\]","<img src=\"\\1\" border=\"0\">",$string);
-$string= eregi_replace("\[url\]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\">\\1</a>",$string);
-$string= eregi_replace("\[url=\"([^\"]+)\"]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\">\\2</a>",$string);
+$string= eregi_replace("\[url\]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\" rel=\"noopener\">\\1</a>",$string);
+$string= eregi_replace("\[url=\"([^\"]+)\"]([^\[]+)\[/url\]","<a href=\"\\1\" target=\"_blank\" rel=\"noopener\">\\2</a>",$string);
 }
 */
 
