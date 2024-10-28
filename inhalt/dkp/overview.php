@@ -17,7 +17,7 @@ echo "</tr>";
 $sqlchars  = "SELECT chars.char_id charid, chars.name charname, klassen.name klassenname, klassen.rgb_farbe klassenfarbe ";
 $sqlchars .= "FROM `".$dkpsyntax."chars` chars ";
 $sqlchars .= "LEFT JOIN `".$dkpsyntax."klassen` klassen ON `chars`.`class_id` = `klassen`.`class_id` ";
-$sqlchars .= "ORDER BY `chars`.`name";
+$sqlchars .= "ORDER BY `chars`.`name`";
 $reschars  = mysql_query($sqlchars);
 while($rowchars = mysql_fetch_object($reschars))
 	{
